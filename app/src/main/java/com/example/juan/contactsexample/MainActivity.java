@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         System.out.println("COUTN DATA:  " + data.getCount());
                         do {
                             try {
-                                System.out.println(c.getString(c.getColumnIndex(ContactsContract.Data.DATA1)));
+                                System.out.println(data.getString(data.getColumnIndex(ContactsContract.Data.DATA1)));
                             } catch (Exception e) {
 
                             }
