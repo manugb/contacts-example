@@ -79,16 +79,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 //                do {
 //                    Toast.makeText(this, c.getString(c.getColumnIndex(ContactsContract.RawContacts.ACCOUNT_NAME)), Toast.LENGTH_SHORT).show();
 //                } while (c.moveToNext());
-                Toast.makeText(this, c.getCount() + " DATA", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, c.getCount() + " DATA", Toast.LENGTH_SHORT).show();
             }
             c.close();
 
             c = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, null, null, null, null);
             if (c.moveToFirst()) {
-//                do {
-//                    Toast.makeText(this, c.getString(c.getColumnIndex(ContactsContract.RawContacts.ACCOUNT_NAME)), Toast.LENGTH_SHORT).show();
-//                } while (c.moveToNext());
-                Toast.makeText(this, c.getCount() + " RAW CONTACTS", Toast.LENGTH_SHORT).show();
+                do {
+                    //Toast.makeText(this, c.getString(c.getColumnIndex(ContactsContract.RawContacts.ACCOUNT_NAME)), Toast.LENGTH_SHORT).show();
+                    Cursor data = getContentResolver().query(ContactsContract.Data.CONTENT_URI,
+                            null, "RAW_CONTACT_ID = ?", new String[]{c.getString(c.getColumnIndex(ContactsContract.RawContacts._ID))}, null);
+                    if (data.getCount() < 4) {
+                        System.out.println("RAW_ID:   " + c.getString(c.getColumnIndex(ContactsContract.RawContacts._ID)));
+                        System.out.println("CONTACT_ID:   " + c.getString(c.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID)));
+                        System.out.println("COUTN DATA:  " + data.getCount());
+                        do {
+                            try {
+                                System.out.println(c.getString(c.getColumnIndex(ContactsContract.Data.DATA1)));
+                            } catch (Exception e) {
+
+                            }
+                        } while (data.moveToNext());
+                    }
+
+                    data.close();
+                } while (c.moveToNext());
+                //Toast.makeText(this, c.getCount() + " RAW CONTACTS", Toast.LENGTH_SHORT).show();
             }
             c.close();
 
@@ -97,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 //                do {
 //                    Toast.makeText(this, c.getString(c.getColumnIndex(ContactsContract.RawContacts.ACCOUNT_NAME)), Toast.LENGTH_SHORT).show();
 //                } while (c.moveToNext());
-                Toast.makeText(this, c.getCount() + " CONTACTS", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, c.getCount() + " CONTACTS", Toast.LENGTH_SHORT).show();
             }
             c.close();
             return true;
